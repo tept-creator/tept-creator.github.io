@@ -81,18 +81,22 @@ function setEmblems(emblemDatas) {
 function openURL(linkId) {
   let baseUrl = `https://www.metatft.com/explorer?tab=comps`;
   let cost5Url = "";
+  let levelUrl = "";
   switch (linkId) {
     case "lv8ex5link":
       const lv8ex5link = document.getElementById("lv8ex5link");
       cost5Url = generateCost5URL("Any");
+      levelUrl = "&num_unit_slots=8";
       break;
     case "lv8ex5_2link":
       const lv8ex5_2link = document.getElementById("lv8ex5_2link");
       cost5Url = generateCost5URL();
+      levelUrl = "&num_unit_slots=8";
       break;
     case "lv9link":
       const lv9link = document.getElementById("lv9link");
       cost5Url = generateCost5URL();
+      levelUrl = "&num_unit_slots=9";
       break;
   }
   let unitUrl = "";
