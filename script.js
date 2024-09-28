@@ -152,7 +152,7 @@ function openURL(linkId) {
   if (heroCheckbox.checked) {
     heroUrl = `&augment=!TFT12_Augment_BlitzcrankCarry&augment=!TFT12_Augment_PoppyCarry&augment=!TFT12_Augment_EliseCarry&augment=!TFT12_Augment_NunuCarry&augment=!TFT12_Augment_RumbleCarry&augment=!TFT12_Augment_GalioCarry&augment=!TFT12_Augment_ShenCarry&augment=!TFT12_Augment_LilliaCarry`;
   }
-  const url = `${baseUrl}${cost5Url}${unitUrl}${emblemUrl}${heroUrl}`;
+  const url = `${baseUrl}${levelUrl}${cost5Url}${unitUrl}${emblemUrl}${heroUrl}`;
   window.open(url, "_blank");
 }
 
