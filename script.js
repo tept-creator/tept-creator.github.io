@@ -1,5 +1,6 @@
 setChampions(championDatas);
 setEmblems(emblemDatas);
+setItems(itemDatas);
 
 function displayData(datas) {
   setChampions(datas.championDatas);
@@ -78,6 +79,25 @@ function setEmblems(emblemDatas) {
   tbody_emblem.innerHTML += table;
 }
 
+function setItems(){
+  let table = "";
+  itemDatas.forEach((itemData, index) => {
+    if (index == 0) return;
+    const name = itemData[0];
+    const nameEN = itemData[1];
+    let row = `
+          <tr>
+            <td style="text-align:left;">${name}</td>
+            <td><input class="form-check-input item-filter" type="checkbox" data-nameEN="${nameEN}"></td>
+            <td><input class="form-check-input item-include" type="checkbox" data-nameEN="${nameEN}" checked></td>
+          </tr>
+        `;
+    table += row;
+  });
+  const tbody_item = document.getElementById("tbody_item");
+  tbody_item.innerHTML += table;
+}
+
 function openURL(linkId) {
   let baseUrl = `https://www.metatft.com/explorer?tab=comps`;
   let cost5Url = "";
@@ -152,7 +172,23 @@ function openURL(linkId) {
   if (heroCheckbox.checked) {
     heroUrl = `&augment=!TFT12_Augment_BlitzcrankCarry&augment=!TFT12_Augment_PoppyCarry&augment=!TFT12_Augment_EliseCarry&augment=!TFT12_Augment_NunuCarry&augment=!TFT12_Augment_RumbleCarry&augment=!TFT12_Augment_GalioCarry&augment=!TFT12_Augment_ShenCarry&augment=!TFT12_Augment_LilliaCarry`;
   }
-  const url = `${baseUrl}${levelUrl}${cost5Url}${unitUrl}${emblemUrl}${heroUrl}`;
+
+  let itemUrl = "";
+  document.querySelectorAll(".item-filter").forEach(filterCheckbox => {
+    if(filterCheckbox.checked){
+      const nameEN = filterCheckbox.getAttribute("data-nameEN");
+      const includeCheckbox = document.querySelector(
+        `.item-include[data-nameEN="${nameEN}"]`
+      );
+      if (includeCheckbox.checked) {
+        itemUrl += `&item=TFT_Item_${nameEN}`;
+      } else {
+        itemUrl += `&item=!TFT_Item_${nameEN}`;
+      }
+    }
+  });
+
+  const url = `${baseUrl}${levelUrl}${cost5Url}${unitUrl}${emblemUrl}${heroUrl}${itemUrl}`;
   window.open(url, "_blank");
 }
 
@@ -243,4 +279,19 @@ function excludeEmblem() {
 
 function resetEmblem() {
   handleEmblemSettings(true, false);
+}
+
+function handleItemSettings(includeChecked, filterChecked) {
+  document.querySelectorAll(".item-filter").forEach((filterCheckbox) => {
+    const nameEN = filterCheckbox.getAttribute("data-nameEN");
+    const includeCheckbox = document.querySelector(
+      `.item-include[data-nameEN="${nameEN}"]`
+    );
+    filterCheckbox.checked = filterChecked;
+    includeCheckbox.checked = includeChecked;
+  });
+}
+
+function resetItem(){
+  handleItemSettings(true, false);
 }

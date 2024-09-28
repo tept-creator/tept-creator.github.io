@@ -22,12 +22,13 @@
       </div>
       <div>
         <button type="button" class="btn btn-danger my-1 w-100" onclick="reset()">リセット</button>
-        <button type="button" class="btn btn-primary my-1 w-100" onclick="reset23()">2,3コスだけをリセット</button>
+        <button type="button" class="btn btn-primary my-1 w-100" onclick="reset23()">2,3コスをリセット</button>
         <button type="button" class="btn btn-primary my-1 w-100" onclick="exclude23Star3()">2,3コス星3を含まない</button>
-        <button type="button" class="btn btn-secondary my-1 w-100" onclick="reset1()">1コスだけをリセット</button>
+        <button type="button" class="btn btn-secondary my-1 w-100" onclick="reset1()">1コスをリセット</button>
         <button type="button" class="btn btn-secondary my-1 w-100" onclick="exclude1Star3()">1コス星3を含まない</button>
-        <button type="button" class="btn btn-success my-1 w-100" onclick="resetEmblem()">紋章だけをリセット</button>
+        <button type="button" class="btn btn-success my-1 w-100" onclick="resetEmblem()">紋章をリセット</button>
         <button type="button" class="btn btn-success my-1 w-100" onclick="excludeEmblem()">紋章を含まない</button>
+        <button type="button" class="btn btn-success my-1 w-100" onclick="resetItem()">アイテムをリセット</button>
       </div>
     </div>
     <!--ここまでサイドバー-->
@@ -59,16 +60,24 @@
         </table>
         <input type="checkbox" class="form-check-input hero-filter" checked> ヒーローオーグメントを含まない</input>
       </div>
+      <div class="mx-1">
+        <table class="table table-sm table-hover" style="text-align:center; vertical-align:middle;">
+          <thead>
+            <tr>
+              <th style="text-align:left;">名前</th>
+              <th>フィルタ</th>
+              <th>含む</th>
+            </tr>
+          </thead>
+          <tbody id="tbody_item"></tbody>
+        </table>
+      </div>
     </div>
   </div>
   <script src="championdatas.js"></script>
   <script src="emblemdatas.js"></script>
+  <script src="itemdatas.js"></script>
   <script src="script.js"></script>
-  <script>
-    var championDatas = "<?= championDatas ?>";
-    var emblemDatas = "<?= emblemDatas ?>";
-  </script>
-  <?!= include('script') ?>
 </body>
 
 </html>
