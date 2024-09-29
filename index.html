@@ -14,11 +14,13 @@
 <body>
   <div class="d-flex">
     <!--ここからサイドバー-->
-    <div class="bg-dark text-white p-1 sticky-top" style="width: 250px; height: 100vh;">
-      <div class="mb-4">
-        <button id="lv9link" type="button" class="btn btn-dark my-1 w-100" onclick='openURL("lv9link")'>Lv9</button>
-        <button id="lv8ex5_2link" type="button" class="btn btn-dark my-1 w-100" onclick='openURL("lv8ex5_2link")'>Lv8_5コス星2を含まない</button>
-        <button id="lv8ex5link" type="button" class="btn btn-dark my-1 w-100" onclick='openURL("lv8ex5link")'>Lv8_5コスを含まない</button>
+    <div class="bg-dark text-white p-1 sticky-top gap d-flex flex-column" style="width: 200px; height: 100vh;">
+      <div>
+        <button id="lv9link" type="button" class="btn btn-dark my-1 w-100" onclick='openURL("lv9")'>Lv9</button>
+        <button id="lv8ex5_2link" type="button" class="btn btn-dark my-1 w-100"
+          onclick='openURL("lv8ex5_2")'>Lv8_5コス星2を含まない</button>
+        <button id="lv8ex5link" type="button" class="btn btn-dark my-1 w-100"
+          onclick='openURL("lv8ex5")'>Lv8_5コスを含まない</button>
       </div>
       <div>
         <button type="button" class="btn btn-danger my-1 w-100" onclick="reset()">リセット</button>
@@ -32,22 +34,24 @@
       </div>
     </div>
     <!--ここまでサイドバー-->
-    <div class="d-flex">
-      <div class="mx-1">
-      <table class="table table-sm table-hover" style="text-align:center; vertical-align:middle;">
-        <thead>
-          <tr>
-            <th>コスト</th>
-            <th style="text-align:left;">名前</th>
-            <th>フィルタ</th>
-            <th>星</th>
-            <th>含む</th>
-          </tr>
-        </thead>
-        <tbody id="tbody_champion"></tbody>
-      </table>
+    <div class="d-flex m-1">
+      <div class="m-1">
+        <input type="text" class="w-100" id="championSearch" placeholder="検索...">
+        <table class="table table-sm table-hover" style="text-align:center; vertical-align:middle;">
+          <thead>
+            <tr>
+              <th>コスト</th>
+              <th style="text-align:left;">名前</th>
+              <th>フィルタ</th>
+              <th>星</th>
+              <th>含む</th>
+            </tr>
+          </thead>
+          <tbody id="tbody_champion"></tbody>
+        </table>
       </div>
-      <div class="mx-1">
+      <div class="m-1">
+        <input type="text" class="w-100" id="emblemSearch" placeholder="検索...">
         <table class="table table-sm table-hover" style="text-align:center; vertical-align:middle;">
           <thead>
             <tr>
@@ -58,9 +62,10 @@
           </thead>
           <tbody id="tbody_emblem"></tbody>
         </table>
-        <input type="checkbox" class="form-check-input hero-filter" checked> ヒーローオーグメントを含まない</input>
+        <input type="checkbox" class="form-check-input hero-filter" checked> ヒーローオーグメントを含まない
       </div>
-      <div class="mx-1">
+      <div class="m-1">
+        <input type="text" class="w-100" id="itemSearch" placeholder="検索...">
         <table class="table table-sm table-hover" style="text-align:center; vertical-align:middle;">
           <thead>
             <tr>
@@ -74,10 +79,13 @@
       </div>
     </div>
   </div>
+  <script src="maps.js"></script>
   <script src="championdatas.js"></script>
   <script src="emblemdatas.js"></script>
   <script src="itemdatas.js"></script>
+  <script src="displaydatas.js"></script>
   <script src="script.js"></script>
+  <script src="searchdatas.js"></script>
 </body>
 
 </html>
