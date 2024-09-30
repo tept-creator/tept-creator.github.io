@@ -4,6 +4,7 @@ displayItems(itemDatas);
 
 function displayChampions(championDatas) {
   let table = "";
+  let beforeCost = 5;
   championDatas.forEach((championData, index) => {
     if (index == 0) return;
     const name = championData[0];
@@ -14,18 +15,16 @@ function displayChampions(championDatas) {
     let star1 = "";
     if (cost == 5) {
       star1 = "selected";
-    }else if (cost == 4){
+    } else if (cost == 4) {
       starAny = "selected";
-    }
-    else{
+    } else {
       star3 = "selected";
     }
-    let itemChecked ="";
-    if (cost != 5){
+    let itemChecked = "";
+    if (cost != 5) {
       itemChecked = "checked";
     }
-    console.log("コストは" + cost + "で" + itemChecked);
-    let row = "";
+
     let select = `
     <select class="form-select form-select-sm champion-star">
       <option value="${starMap.ANY}" ${starAny}>Any</option>
@@ -36,8 +35,14 @@ function displayChampions(championDatas) {
       <option value="${starMap.THREE}" ${star3}>3</option>
     </select>
   `;
-  console.log(`${name}のコストは${cost}`);
-row = `
+    let row = "";
+    if(beforeCost != cost){
+      row += `
+      <tr class="table-secondary"><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      `;
+    }
+    beforeCost = cost;
+    row += `
     <tr class="champion-row">
       <td class="champion-cost" data-cost="${cost}">${cost}</td>
       <td class="champion-name" style="text-align:left;" data-nameEN="${nameEN}">${name}</td>
@@ -47,40 +52,6 @@ row = `
       <td><input type="checkbox" class="form-check-input champion-include" checked></td>
     </tr>
   `;
-  /*
-    if (cost == 5) {
-      row = `
-            <tr class="champion-row">
-              <td class="champion-cost5">5</td>
-              <td class="champion-name" style="text-align:left;" data-nameEN="${nameEN}">${name}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          `;
-    } else {
-      let select = `
-          <select class="form-select form-select-sm champion-star">
-            <option value="${starMap.ANY}" ${s_5_4}>Any</option>
-            <option value="${starMap.ONE}">1</option>
-            <option value="${starMap.TWO}">2</option>
-            <option value="${starMap.TWO_MINUS}">2-</option>
-            <option value="${starMap.TWO_PLUS}">2+</option>
-            <option value="${starMap.THREE}" ${s_3_2_1}>3</option>
-          </select>
-        `;
-        console.log(`${name}のコストは${cost}`);
-      row = `
-          <tr class="champion-row">
-            <td class="champion-cost${cost}">${cost}</td>
-            <td class="champion-name" style="text-align:left;" data-nameEN="${nameEN}">${name}</td>
-            <td><input type="checkbox" class="form-check-input champion-filter"></td>
-            <td class="p-0 m-0">${select}</td>
-            <td><input type="checkbox" class="form-check-input champion-include" checked></td>
-          </tr>
-        `;
-    }
-        */
     table += row;
   });
   const tbody_champion = document.getElementById("tbody_champion");
