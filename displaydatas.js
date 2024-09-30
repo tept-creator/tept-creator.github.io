@@ -9,14 +9,45 @@ function displayChampions(championDatas) {
     const name = championData[0];
     const nameEN = championData[1];
     const cost = championData[2];
-    let s_3_2_1 = "";
-    let s_5_4 = "";
-    if (cost > 3) {
-      s_5_4 = "selected";
-    } else {
-      s_3_2_1 = "selected";
+    let star3 = "";
+    let starAny = "";
+    let star1 = "";
+    if (cost == 5) {
+      star1 = "selected";
+    }else if (cost == 4){
+      starAny = "selected";
     }
+    else{
+      star3 = "selected";
+    }
+    let itemChecked ="";
+    if (cost != 5){
+      itemChecked = "checked";
+    }
+    console.log("コストは" + cost + "で" + itemChecked);
     let row = "";
+    let select = `
+    <select class="form-select form-select-sm champion-star">
+      <option value="${starMap.ANY}" ${starAny}>Any</option>
+      <option value="${starMap.ONE}" ${star1}>1</option>
+      <option value="${starMap.TWO}">2</option>
+      <option value="${starMap.TWO_MINUS}">2-</option>
+      <option value="${starMap.TWO_PLUS}">2+</option>
+      <option value="${starMap.THREE}" ${star3}>3</option>
+    </select>
+  `;
+  console.log(`${name}のコストは${cost}`);
+row = `
+    <tr class="champion-row">
+      <td class="champion-cost" data-cost="${cost}">${cost}</td>
+      <td class="champion-name" style="text-align:left;" data-nameEN="${nameEN}">${name}</td>
+      <td><input type="checkbox" class="form-check-input champion-filter"></td>
+      <td><input type="checkbox" class="form-check-input champion-item" ${itemChecked}></td>
+      <td class="p-0 m-0">${select}</td>
+      <td><input type="checkbox" class="form-check-input champion-include" checked></td>
+    </tr>
+  `;
+  /*
     if (cost == 5) {
       row = `
             <tr class="champion-row">
@@ -49,6 +80,7 @@ function displayChampions(championDatas) {
           </tr>
         `;
     }
+        */
     table += row;
   });
   const tbody_champion = document.getElementById("tbody_champion");

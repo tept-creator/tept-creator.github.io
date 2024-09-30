@@ -1,41 +1,39 @@
 function openURL(linkId) {
   let baseUrl = `https://www.metatft.com/explorer?tab=comps`;
 
-  let slotUrl = "";
-  if (linkId == "lv9"){
-    slotUrl = "&num_unit_slots=9";
-  }else{
-    slotUrl = "&num_unit_slots=8";
-  }
+  const levelMatch = linkId.match(/lv(\d+)/);
+  const numSlots = levelMatch ? levelMatch[1] : 8;
+  const slotUrl = `&num_unit_slots=${numSlots}`;
 
   let cost5Url = "";
-  document.querySelectorAll(".champion-cost5").forEach((costCell) => {
-    var row = costCell.closest("tr");
-    const nameEN = row.querySelector(".champion-name").getAttribute("data-nameEN");
-    if (linkId == "lv8ex5"){
-      cost5Url += `&unit=!TFT12_${nameEN}_${starMap.ANY}_x`;
-    }else{
-      cost5Url += `&unit=!TFT12_${nameEN}_${starMap.TWO_PLUS}_x`;
-    }
-  });
+  if(!linkId.includes("normal")){
+    document.querySelectorAll(".champion-cost").forEach((costCell) => {
+      var cost = costCell.getAttribute("data-cost");
+      if (cost < 5) return;
+      var row = costCell.closest("tr");
+      const nameEN = row.querySelector(".champion-name").getAttribute("data-nameEN");
+      if (linkId.includes("ex5_2")){
+        cost5Url += `&unit=!TFT12_${nameEN}_${starMap.TWO_PLUS}_x`;
+      }else if(linkId.includes("ex5")) {
+        cost5Url += `&unit=!TFT12_${nameEN}_${starMap.ANY}_x`;
+      }
+    });
+  }
 
   let unitUrl = "";
   document.querySelectorAll(".champion-filter").forEach((filterCheckbox) => {
     if (filterCheckbox.checked) {
       const row = filterCheckbox.closest("tr");
+      const costCell = row.querySelector(".champion-cost");
+      var cost = costCell.getAttribute("data-cost");
+      if(cost == 5 && !linkId.includes("normal")) return;
       const nameEN = row.querySelector(".champion-name").getAttribute("data-nameEN");
-      const includeCheckbox = row.querySelector(
-        ".champion-include"
-      );
-      const starSelect = row.querySelector(
-        ".champion-star"
-      );
-      console.log("starSelect.value = " + starSelect.value);
-      if (includeCheckbox.checked) {
-        unitUrl += `&unit=TFT12_${nameEN}_${starSelect.value}_3`;
-      } else {
-        unitUrl += `&unit=!TFT12_${nameEN}_${starSelect.value}_x`;
-      }
+      const includeCheckbox = row.querySelector(".champion-include");
+      const itemCheckbox = row.querySelector(".champion-item");
+      var item = itemCheckbox.checked && includeCheckbox.checked ? "3" : "x";
+      const starSelect = row.querySelector(".champion-star");
+      var include = includeCheckbox.checked ? "" : "!";
+      unitUrl += `&unit=${include}TFT12_${nameEN}_${starSelect.value}_${item}`;
     }
   });
 
@@ -79,7 +77,7 @@ function openURL(linkId) {
 function reset() {
   reset1();
   reset23();
-  reset4();
+  reset45();
   resetEmblem();
   resetItem();
 }
@@ -87,47 +85,52 @@ function reset() {
 function handleChampionSettings(
   cost,
   filterChecked,
+  itemChecked,
   starValue,
   includeChecked
 ) {
   // 指定されたコストクラスのチャンピオンに対して処理を行う
   document
-    .querySelectorAll(`.champion-cost${cost}`)
+    .querySelectorAll(`.champion-cost`)
     .forEach((championCost) => {
+      if (cost != championCost.getAttribute("data-cost"))return;
       const row = championCost.closest("tr");
       const name = row.querySelector(".champion-name").getAttribute("data-nameEN");
       console.log(name+cost);
       const filterCheckbox = row.querySelector(".champion-filter");
+      const itemCheckbox = row.querySelector(".champion-item");
       const starSelect = row.querySelector(".champion-star");
       const includeCheckbox = row.querySelector(".champion-include");
 
       // チェックボックスやセレクトの状態を更新
       filterCheckbox.checked = filterChecked;
+      itemCheckbox.checked = itemChecked;
       starSelect.value = starValue;
       includeCheckbox.checked = includeChecked;
     });
 }
 
-function reset4() {
-  handleChampionSettings(4, false, starMap.ANY, true);
+function reset45() {
+  handleChampionSettings(4, false, true, starMap.ANY, true);
+  handleChampionSettings(5, false, false, starMap.ONE, true);
 }
 
 function exclude23Star3() {
-  handleChampionSettings(2, true, starMap.THREE, false);
-  handleChampionSettings(3, true, starMap.THREE, false);
+  handleChampionSettings(2, true, true, starMap.THREE, false);
+  handleChampionSettings(3, true, true, starMap.THREE, false);
 }
 
 function reset23() {
-  handleChampionSettings(2, false, starMap.THREE, true);
-  handleChampionSettings(3, false, starMap.THREE, true);
+  handleChampionSettings(2, false, true, starMap.THREE, true);
+  handleChampionSettings(3, false, true, starMap.THREE, true);
 }
 
 function exclude1Star3() {
-  handleChampionSettings(1, true, starMap.THREE, false);
+  handleChampionSettings(1, true, true, starMap.THREE, false);
 }
 
 function reset1() {
-  handleChampionSettings(1, false, starMap.THREE, true);
+  handleChampionSettings(1, false, true, starMap.THREE, true);
 }
 
 function handleEmblemSettings(includeChecked, filterChecked) {

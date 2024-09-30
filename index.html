@@ -14,13 +14,39 @@
 <body>
   <div class="d-flex">
     <!--ここからサイドバー-->
-    <div class="bg-dark text-white p-1 sticky-top gap d-flex flex-column" style="width: 200px; height: 100vh;">
-      <div>
-        <button id="lv9link" type="button" class="btn btn-dark my-1 w-100" onclick='openURL("lv9")'>Lv9</button>
+    <div class="bg-dark text-white p-2 sticky-top" style="width: 200px; height: 100vh;">
+      <div class="text-center mb-2">
+        <div>
+          リンク
+        </div>
+        <div id="normallinks">
+
+        </div>
+      </div>
+      <div class="text-center mb-2">
+        <div>
+          5コス星2を含まない
+        </div>
+        <div id="ex5_2links">
+
+        </div>
+        <!--
+        <button id="lv9link" type="button" class="btn btn-dark my-1 w-100" onclick='openURL("lv9ex5_2")'>Lv9_5コス星2を含まない</button>
         <button id="lv8ex5_2link" type="button" class="btn btn-dark my-1 w-100"
           onclick='openURL("lv8ex5_2")'>Lv8_5コス星2を含まない</button>
         <button id="lv8ex5link" type="button" class="btn btn-dark my-1 w-100"
           onclick='openURL("lv8ex5")'>Lv8_5コスを含まない</button>
+          <button id="lv7link" type="button" class="btn btn-dark my-1 w-100"
+          onclick='openURL("lv7ex5")'>Lv7_5コスを含まない</button>
+        -->
+      </div>
+      <div class="text-center mb-2">
+        <div>
+          5コスを含まない
+        </div>
+        <div id="ex5links">
+
+        </div>
       </div>
       <div>
         <button type="button" class="btn btn-danger my-1 w-100" onclick="reset()">リセット</button>
@@ -34,7 +60,7 @@
       </div>
     </div>
     <!--ここまでサイドバー-->
-    <div class="d-flex m-1">
+    <div class="d-flex p-1">
       <div class="m-1">
         <input type="text" class="w-100" id="championSearch" placeholder="検索...">
         <table class="table table-sm table-hover" style="text-align:center; vertical-align:middle;">
@@ -43,6 +69,7 @@
               <th>コスト</th>
               <th style="text-align:left;">名前</th>
               <th>フィルタ</th>
+              <th>アイテム</th>
               <th>星</th>
               <th>含む</th>
             </tr>
@@ -84,6 +111,7 @@
   <script src="emblemdatas.js"></script>
   <script src="itemdatas.js"></script>
   <script src="displaydatas.js"></script>
+  <script src="displayLinkButtons.js"></script>
   <script src="script.js"></script>
   <script src="searchdatas.js"></script>
 </body>
